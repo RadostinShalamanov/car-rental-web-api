@@ -29,5 +29,11 @@ ASP.NET Core Web API project for managing a car rental system.
 3. Start the API
 4. Test endpoints using Postman
 
+## Postman
+
+A complete Postman collection is included in the `/postman` folder.
+
+You can import it into Postman and test all endpoints.
+
 ## Demo
 All endpoints are tested via Postman.
