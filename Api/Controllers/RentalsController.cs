@@ -5,12 +5,14 @@ using Api.Infrastructure.ResponseDTOs.Rental;
 using Api.Infrastructure.ResponseDTOs.Shared;
 using Common.Entities;
 using Common.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RentalsController : ControllerBase
     {
         private readonly RentalService _service;
@@ -119,6 +121,7 @@ namespace Api.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Post([FromBody] RentalCreateDto dto)
         {
             if (!ModelState.IsValid)
@@ -143,7 +146,7 @@ namespace Api.Controllers
 
 
         [HttpPut("{id}")]
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Put(int id,[FromBody]RentalUpdateDto dto)
         {
             if (!ModelState.IsValid)
@@ -166,7 +169,7 @@ namespace Api.Controllers
 
 
         [HttpDelete("{id}")]
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             Rental forDelete=_service.GetById(id);

@@ -116,6 +116,7 @@ namespace Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Post([FromBody] CarRequestDTO dto)
         {
             
@@ -137,6 +138,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Put(int id, [FromBody] CarRequestDTO dto)
         {
            
@@ -158,6 +160,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             Car forDelete = _carService.GetById(id);
@@ -173,6 +176,7 @@ namespace Api.Controllers
 
 
         [HttpPut("{id}/categories")]
+        [Authorize(Roles = "Admin")]
         public IActionResult SetCategories(int id, [FromBody] CarCategoriesUpdateDto dto)
         {
             
@@ -193,6 +197,7 @@ namespace Api.Controllers
 
 
         [HttpPut("{id}/features")]
+        [Authorize(Roles = "Admin")]
         public IActionResult SetFeatures(int id, [FromBody] CarFeaturesUpdateDto dto)
         {
             
@@ -214,6 +219,7 @@ namespace Api.Controllers
 
 
         [HttpPut("{id}/locations")]
+        [Authorize(Roles = "Admin")]
         public IActionResult SetLocations(int id, [FromBody] CarLocationsUpdateDto dto)
         {
             

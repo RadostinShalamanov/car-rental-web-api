@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Api.Infrastructure.RequestDTOs.Auth;
 using Api.Services;
+using Common;
 using Common.Entities;
 using Common.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Api.Controllers
 {
@@ -15,10 +15,12 @@ namespace Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly TokenService _tokenService;
 
-        public AuthController(UserService userService)
+        public AuthController(UserService userService, TokenService tokenService)
         {
             _userService = userService;
+            _tokenService = tokenService;
         }
 
         [HttpPost]
@@ -26,7 +28,7 @@ namespace Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(
-                    ServiceResultExtension<List<Error>>.Failure(null, ModelState)
+                    ServiceResultExtension<System.Collections.Generic.List<Common.Error>>.Failure(null, ModelState)
                     );
 
                 
@@ -39,13 +41,11 @@ namespace Api.Controllers
                 ModelState.AddModelError("Global","Invalid username or password");
 
                 return Unauthorized(
-                    ServiceResultExtension<List<Error>>.Failure(null, ModelState)
-                    
+                    ServiceResultExtension<System.Collections.Generic.List<Common.Error>>.Failure(null, ModelState)
                 );
             }
 
-            TokenService tokenService=new TokenService();
-            string token=tokenService.CreateToken(loggedUser);
+            string token = _tokenService.CreateToken(loggedUser);
             return Ok(new
             {
                 token=token

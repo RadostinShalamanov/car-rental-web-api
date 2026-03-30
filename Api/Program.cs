@@ -1,4 +1,5 @@
 using System.Text;
+using Api.Services;
 using Common;
 using Common.Services;
 using FluentValidation;
@@ -25,9 +26,7 @@ builder.Services.AddControllers()
     .ConfigureApiBehaviorOptions(options =>
     {
         options.SuppressModelStateInvalidFilter = true;
-    });
-    
-builder.Services.AddControllers()
+    })
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler =
@@ -48,11 +47,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddAuthorization();
+
 builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<LocationService>();
 builder.Services.AddScoped<RentalService>();
 builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();

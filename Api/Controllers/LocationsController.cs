@@ -4,12 +4,14 @@ using Api.Infrastructure.RequestDTOs.Locations;
 using Api.Infrastructure.ResponseDTOs.Locations;
 using Common.Entities;
 using Common.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LocationsController : ControllerBase
     {
         private readonly LocationService _locationService;
@@ -59,6 +61,7 @@ namespace Api.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Post([FromBody] LocationRequestDto dto)
         {
              if (!ModelState.IsValid)
@@ -78,7 +81,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("{id}")]
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Put(int id,[FromBody] LocationRequestDto dto)
         {
             if (!ModelState.IsValid)
@@ -96,7 +99,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             Location forDelete = _locationService.GetById(id);
