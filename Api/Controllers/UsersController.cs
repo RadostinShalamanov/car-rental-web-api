@@ -6,12 +6,14 @@ using Api.Infrastructure.ResponseDTOs.Shared;
 using Api.Infrastructure.ResponseDTOs.Users;
 using Common.Entities;
 using Common.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
     
@@ -99,6 +101,7 @@ namespace Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Post([FromBody] UserRequest dto)
         {
 
@@ -121,6 +124,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Put(int id, [FromBody] UserRequest dto)
         {
            
@@ -141,6 +145,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
            
@@ -155,7 +160,7 @@ namespace Api.Controllers
 
 
         [HttpPut("{id}/roles")]
-
+        [Authorize(Roles = "Admin")]
         public IActionResult SetRoles(int id, [FromBody] UserRolesUpdateDto dto)
         {
             if (!ModelState.IsValid)

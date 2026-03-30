@@ -4,6 +4,7 @@ using Api.Infrastructure.RequestDTOs.Payments;
 using Api.Infrastructure.ResponseDTOs.Payments;
 using Common.Entities;
 using Common.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -11,6 +12,7 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PaymentsController : ControllerBase
     {
         private readonly PaymentService _service;
@@ -72,6 +74,7 @@ namespace Api.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Post([FromBody]PaymentRequestDto dto)
         {
             if (!ModelState.IsValid)
@@ -90,6 +93,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             Payment forDelete = _service.GetById(id);
